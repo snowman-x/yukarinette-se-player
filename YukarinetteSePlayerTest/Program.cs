@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using YukarinetteSePlayer;
 using YukarinetteSePlayer.ViewModel;
 
 namespace YukarinetteSePlayerTest
 {
-    class Program
+    internal class Program
     {
         [STAThread]
-        static void Main(string[] args)
+        static void Main()
         {
             var player = new SePlayer();
             var panel = SettingPanel.Instance;
@@ -38,9 +35,11 @@ namespace YukarinetteSePlayerTest
                 }
             }
 
-            viewModel.CsvFileName = @"D:\Application\ゆかりネット\音源連携.csv";
+            // viewModel.CsvFileName = @"CSV FILE PATH";
             viewModel.Save();
-            player.Filtering("出陣2", null);
+
+            var keyword = "KEYWORD";
+            player.Filtering(keyword, null);
 
             Console.WriteLine("Finished");
             Console.ReadLine();
