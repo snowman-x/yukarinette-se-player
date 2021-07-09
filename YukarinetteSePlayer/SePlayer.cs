@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using IrrKlang;
 using Yukarinette;
+using YukarinetteSePlayer.Core;
 using YukarinetteSePlayer.Data;
 using YukarinetteSePlayer.Properties;
 using YukarinetteSePlayer.ViewModel;
@@ -215,7 +216,8 @@ namespace YukarinetteSePlayer
 
         private Record Find(string text)
         {
-            var str = (text ?? "").Replace(" ", "").Replace("　", "");
+            var str = Normalizer.Normalize(text);
+            SettingPanelViewModel.Instance.WriteLog($"[DEBUG] {str}");
             foreach (var record in Records)
             {
                 if (record.RunMode == RunMode.None)
@@ -223,12 +225,14 @@ namespace YukarinetteSePlayer
                     continue;
                 }
 
-                if (record.RunMode == RunMode.Strict && str != record.Keyword)
+                var keyword = Normalizer.Normalize(record.Keyword);
+
+                if (record.RunMode == RunMode.Strict && str != keyword)
                 {
                     continue;
                 }
 
-                if (record.RunMode == RunMode.Fuzzy && str.Contains(record.Keyword))
+                if (record.RunMode == RunMode.Fuzzy && str.Contains(keyword))
                 {
                     continue;
                 }

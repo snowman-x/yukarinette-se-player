@@ -71,6 +71,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Normalizer.cs" />
     <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="Data\Record.cs" />
     <Compile Include="Data\ReplaceMode.cs" />
