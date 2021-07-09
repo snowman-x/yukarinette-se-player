@@ -217,7 +217,7 @@ namespace YukarinetteSePlayer
         private Record Find(string text)
         {
             var str = Normalizer.Normalize(text);
-            SettingPanelViewModel.Instance.WriteLog($"[DEBUG] {str}");
+            SettingPanelViewModel.Instance.DebugLog($"[DEBUG] {str}");
             foreach (var record in Records)
             {
                 if (record.RunMode == RunMode.None)
@@ -229,11 +229,13 @@ namespace YukarinetteSePlayer
 
                 if (record.RunMode == RunMode.Strict && str != keyword)
                 {
+                    SettingPanelViewModel.Instance.DebugLog($"[DEBUG] {keyword} is not match (strict)");
                     continue;
                 }
 
-                if (record.RunMode == RunMode.Fuzzy && str.Contains(keyword))
+                if (record.RunMode == RunMode.Fuzzy && !keyword.Contains(str))
                 {
+                    SettingPanelViewModel.Instance.DebugLog($"[DEBUG] {keyword} is not match (fuzzy)");
                     continue;
                 }
 
