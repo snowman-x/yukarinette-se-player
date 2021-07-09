@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using IrrKlang;
@@ -120,6 +121,13 @@ namespace YukarinetteSePlayer.ViewModel
             {
                 Log = string.Join("\n", lines);
             });
+        }
+
+        [Conditional("DEBUG")]
+        public void DebugLog(string log)
+        {
+            var message = $"[{DateTime.Now:HH:mm:ss.fff}] {log}";
+            Console.WriteLine(message);
         }
 
         #region INotifyPropertyChanged
