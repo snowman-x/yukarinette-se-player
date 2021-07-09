@@ -233,7 +233,7 @@ namespace YukarinetteSePlayer
                     continue;
                 }
 
-                if (record.RunMode == RunMode.Fuzzy && !keyword.Contains(str))
+                if (record.RunMode == RunMode.Fuzzy && !str.Contains(keyword))
                 {
                     SettingPanelViewModel.Instance.DebugLog($"[DEBUG] {keyword} is not match (fuzzy)");
                     continue;

@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using YukarinetteSePlayer.Properties;
 using YukarinetteSePlayer.ViewModel;
 
@@ -23,15 +24,10 @@ namespace YukarinetteSePlayer
         private void Initialize()
         {
             ViewModel.CsvFileName = Settings.Default.CsvFileName;
-
-            // var guid = Settings.Default.SoundDeviceGuid;
             var deviceId = Settings.Default.DeviceId;
             foreach (var device in ViewModel.SoundDevices)
             {
-
-                if (deviceId == device.Id)
-                // if (device.Guid != guid)
-                // if (device.ManufacturerGuid != guid)
+                if (deviceId != device.Id)
                 {
                     continue;
                 }
