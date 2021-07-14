@@ -30,6 +30,7 @@ namespace YukarinetteSePlayer
 
         public override YukarinetteFilterPluginResult Filtering(string text, YukarinetteWordDetailData[] words)
         {
+            var panel = SettingPanel.Instance;
             LoadCsvFile();
             var result = new YukarinetteFilterPluginResult
             {
