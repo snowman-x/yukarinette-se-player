@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using IrrKlang;
 using Yukarinette;
@@ -30,7 +31,6 @@ namespace YukarinetteSePlayer
 
         public override YukarinetteFilterPluginResult Filtering(string text, YukarinetteWordDetailData[] words)
         {
-            var panel = SettingPanel.Instance;
             LoadCsvFile();
             var result = new YukarinetteFilterPluginResult
             {
@@ -43,14 +43,14 @@ namespace YukarinetteSePlayer
         {
             if (string.IsNullOrEmpty(Settings.Default.CsvFileName))
             {
-                SettingPanelViewModel.Instance.WriteLog("[ERROR] CSVファイルの場所が設定されていません");
+                SettingPanelViewModel.Instance?.WriteLog("[ERROR] CSVファイルの場所が設定されていません");
                 return;
             }
 
             var fileInfo = new FileInfo(Settings.Default.CsvFileName);
             if (!fileInfo.Exists)
             {
-                SettingPanelViewModel.Instance.WriteLog("[ERROR] CSVファイルが設定された場所に存在しません");
+                SettingPanelViewModel.Instance?.WriteLog("[ERROR] CSVファイルが設定された場所に存在しません");
                 return;
             }
 
@@ -66,7 +66,7 @@ namespace YukarinetteSePlayer
 
             if (time <= CacheDate)
             {
-                SettingPanelViewModel.Instance.WriteLog("[INFO] CSVファイルの読み込みをスキップします");
+                SettingPanelViewModel.Instance?.WriteLog("[INFO] CSVファイルの読み込みをスキップします");
                 return;
             }
 
@@ -94,27 +94,27 @@ namespace YukarinetteSePlayer
             }
             catch (Exception ex)
             {
-                SettingPanelViewModel.Instance.WriteLog($"[ERROR] CSVファイルが読み込めませんでした({ex.Message})");
+                SettingPanelViewModel.Instance?.WriteLog($"[ERROR] CSVファイルが読み込めませんでした({ex.Message})");
                 return;
             }
 
-            SettingPanelViewModel.Instance.WriteLog($"[INFO] CSVファイルを読み込みました({Records.Count:N0}件)"); 
+            SettingPanelViewModel.Instance?.WriteLog($"[INFO] CSVファイルを読み込みました({Records.Count:N0}件)"); 
         }
 
         private string Run(string text)
         {
             try
             {
-                SettingPanelViewModel.Instance.WriteLog($"[WORD] `{text}`");
+                SettingPanelViewModel.Instance?.WriteLog($"[WORD] `{text}`");
 
                 var record = Find(text);
                 if (record == null)
                 {
-                    SettingPanelViewModel.Instance.WriteLog("[INFO] 該当データなし");
+                    SettingPanelViewModel.Instance?.WriteLog("[INFO] 該当データなし");
                     return text;
                 }
 
-                SettingPanelViewModel.Instance.WriteLog($"[FIND] {record.Keyword}");
+                SettingPanelViewModel.Instance?.WriteLog($"[FIND] {record.Keyword}");
                 if (string.IsNullOrWhiteSpace(record.FileName))
                 {
                     return text;
@@ -139,12 +139,12 @@ namespace YukarinetteSePlayer
                         Play(record);
                     }
 
-                    SettingPanelViewModel.Instance.WriteLog($"[PLAY] {record.FileName}");
+                    SettingPanelViewModel.Instance?.WriteLog($"[PLAY] {record.FileName}");
                 }
                 catch (Exception ex)
                 {
-                    SettingPanelViewModel.Instance.WriteLog("[ERROR] サウンドの再生に失敗しました");
-                    SettingPanelViewModel.Instance.WriteLog($"例外:{ex.Message}");
+                    SettingPanelViewModel.Instance?.WriteLog("[ERROR] サウンドの再生に失敗しました");
+                    SettingPanelViewModel.Instance?.WriteLog($"例外:{ex.Message}");
                 }
 
                 if (0 < record.Latency)
@@ -166,8 +166,8 @@ namespace YukarinetteSePlayer
             }
             catch (Exception ex)
             {
-                SettingPanelViewModel.Instance.WriteLog("[ERROR] エラーが発生しました");
-                SettingPanelViewModel.Instance.WriteLog($"例外:{ex.Message}");
+                SettingPanelViewModel.Instance?.WriteLog("[ERROR] エラーが発生しました");
+                SettingPanelViewModel.Instance?.WriteLog($"例外:{ex.Message}");
             }
 
             return text;
